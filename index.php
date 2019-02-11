@@ -1,34 +1,72 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Food Truck</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <!--add css file-->
-    <link rel="stylesheet" href="css/bootstrap.css">
-  </head>
-  <body>
-    <div id="page">
-      <h1 align="center">Food Truck</h1>
-      <h3 align="center">You know you're hungry, order now!</h3>
-    <div class="container">
-      <h3 align="center">Menu</h3>
-      <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Description</th>
-              <th scope="col">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="table-success">
-              <td>Taco</td>
-              <td>Our tacos are awesome</td>
-              <td>$4.95</td>
-            </tr>
-          </tbody>
-      </table>        
-    </div>
-    </div>
-  </body>
-</html>
+<?php include 'includes/header.php'; ?>
+<?php
+//index.php
+$myItem = new Item(1, 'Taco', 'Our tacos are awesome', 4.95);
+/*$myItem->addExtra('sour cream');
+$myItem->addExtra('cheese');
+$myItem->addExtra('guacamole');
+$myItem->addExtra('salsa');
+//out go to bag of food items*/
+$items[] = $myItem;
+
+
+$myItem = new Item(2, 'Hot Dog', 'Our hot dogs are awesome', 5.95);
+/*$myItem->addExtra('ketchup');
+$myItem->addExtra('onions');
+$myItem->addExtra('spicy mustard');
+$myItem->addExtra('saurkraut');*/
+$items[] = $myItem;
+
+
+$myItem = new Item(3, 'Sundae', 'Our sundaes are awesome', 3.95);
+/*$myItem->addExtra('chocolate');
+$myItem->addExtra('nuts');
+$myItem->addExtra('whipped cream');
+$myItem->addExtra('cherry');*/
+$items[] = $myItem;
+
+
+$cost = 0;
+$number_of_items = 0;
+
+foreach($items as $item) 
+{
+    $cost += $item->Price;
+    $number_of_items++;
+    //loop through the data
+
+    echo "<tr>
+          <td>$item->Name</td>
+          <td>$item->Description</td>
+          <td>$item->Price</td>
+          </tr>";  
+}
+
+class Item{
+    //properties
+    public $ID = 0;
+    public $Name = '';
+    public $Description = '';
+    public $Price = 0;
+    public $Extras = array(); //presents 1 to many relationships
+    
+    //constructor
+    public function __construct($ID, $Name, $Description, $Price){
+        //$this->ID points to the variable $ID
+        $this->ID = $ID;
+        $this->Name = $Name;
+        $this->Description = $Description;
+        $this->Price = $Price;
+    }//end constructor
+    
+    //methods
+    public function addExtra($extra){
+        
+        $this->Extras[] = $extra;
+        
+    }//end function addExtra();
+}//end Item class
+?>
+
+            
+<?php include 'includes/footer.php'; ?>           
