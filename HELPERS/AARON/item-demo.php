@@ -80,7 +80,74 @@ function showForm()
         //echo "<p>ID:$item->ID  Name:$item->Name</p>"; 
         //echo '<p>Taco <input type="text" name="item_1" /></p>';
 
-          echo '<p>' . $item->Name . ' <input type="text" name="item_' . $item->ID . '" /></p>';
+            echo '<p>' . $item->Name . ' <input type="text" name="item_' . $item->ID . '" /></p>';
+            //echo '<p>' . $item-> . ' <input type="text" name="item_' . $item->ID . '" /></p>';
+        
+        //$myItem->addExtra("Sour Cream");
+            //echo '<p>' . $item->addExtra . ' <input type="text"     name="item_' . $item->ID . '" /></p>';
+            //echo   '<p> <input type="checkbox" name="Sour Cream" <br/> </p>';
+        
+        
+//echo '<pre>';
+//    var_dump($item);  // simple VAR DUMP for debug
+//echo '</pre>';
+        
+//            foreach($config->extras as $item->Extras[])
+//            {
+//                echo '<p>' . $item->Extras . '</p>';
+//                
+//            }
+        
+        
+            //echo '<p>' . $item->Extras[0] . '</p>';
+        
+            foreach($item->Extras as $extra_id)
+            {
+                //echo $extra_id;
+                echo '<p><input type="checkbox" name="Toppings[]" />  '  . $extra_id . '</p>';
+                //echo '<br>';
+            }
+        
+            echo '<br>';
+        
+        
+            //echo '<p><input type="checkbox" name="Toppings[]" />  '  . $item->Extras[0] . '</p>';
+        
+            //echo 'AARON DEBUG FLAG 001';
+            //echo '<br>';
+        
+            //echo $item->Extras[0] ;
+        
+        
+//            echo  '<p>AARON_DEBUG_FLAG____001 </p>';
+//            echo  '<p>AARON_DEBUG_FLAG____001 </p>';
+//            echo  '<br><br>';
+        
+            //echo '<p>' . $item . ' </p>';
+        
+        
+//            foreach($config->items as $extra)
+//            //foreach($items->Extras as $item_extra)
+//            {
+//                echo $extras;
+//            }
+        
+        
+            //echo   '<p> <input type="checkbox" name="Toppings[]" <br/>Sour Cream   <p/>';
+
+        
+            //echo '<p>  </p>';
+        
+            
+        
+//            echo '<p> &nbsp; &nbsp; &nbsp; &nbsp;  ' . $item->Name . ' EXTRAS_01 <input type="text"  /></p>';
+//            echo '<p> &nbsp; &nbsp; &nbsp; &nbsp;  ' . $item->Name . ' EXTRAS_02 <input type="text"  /></p>';
+//            echo '<p> &nbsp; &nbsp; &nbsp; &nbsp;  ' . $item->Name . ' EXTRAS_03 <input type="text"  /></p>';
+        
+        
+        
+            echo '<br>';
+
 
       }       
  
