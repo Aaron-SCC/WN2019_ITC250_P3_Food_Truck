@@ -1,6 +1,20 @@
-<?php include 'includes/items.php'; ?>
-<?php include 'includes/cart.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php 
+/**
+ * index.php
+ *
+ * This is the main page. It includes HTML and PHP.
+ * It calls items.php, cart.php, header.php, and footer.php
+ *
+ * @package ITC250
+ * @authors Aaron Lewis <aaron.lewis@seattlcentral.edu>, Liyun Cecil <liyuncecil@gmail.com>, Derrick Mou <jtrvsconan@gmail.com>, Derek Hendrick <mooserkay@gmail.com>
+ * @version 1.1 2019/2/14
+ * @link http://derekheducation.dreamhosters.com/p3/index.php
+ * @license http://opensource.org/licenses/osl-3.0.php Open Software License ("OSL") v. 3.0
+ */
+
+include 'includes/items.php';
+include 'includes/cart.php';
+include 'includes/header.php'; ?>
 
     <div id="page">
       <h1 align="center">Food Truck</h1>

@@ -1,5 +1,17 @@
 <?php
-//index.php
+/**
+ * items.php
+ *
+ * These are the three items that can be added to the cart.
+ * It includes the item class itself, and the three item objects.
+ *
+ * @package ITC250
+ * @authors Aaron Lewis <aaron.lewis@seattlcentral.edu>, Liyun Cecil <liyuncecil@gmail.com>, Derrick Mou <jtrvsconan@gmail.com>, Derek Hendrick <mooserkay@gmail.com>
+ * @version 1.1 2019/2/14
+ * @link http://derekheducation.dreamhosters.com/p3/index.php
+ * @license http://opensource.org/licenses/osl-3.0.php Open Software License ("OSL") v. 3.0
+ */
+
 $myItem = new Item(1, 'Taco', 'Our tacos are awesome', 4.95, 10);
 /*$myItem->addExtra('sour cream');
 $myItem->addExtra('cheese');
