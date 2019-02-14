@@ -1,7 +1,3 @@
-
-          </tbody>
-      </table>        
-    </div>
-    </div>
-  </body>
+<!--footer.php-->
+    </body>
 </html>

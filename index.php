@@ -1,23 +1,118 @@
-<?php include 'includes/header.php'; ?>
 <?php include 'includes/items.php'; ?>
+<?php include 'includes/cart.php'; ?>
+<?php include 'includes/header.php'; ?>
+
+    <div id="page">
+      <h1 align="center">Food Truck</h1>
+      <h3 align="center">You know you are hungry, order now!</h3>
+    <div class="container">
+      <h3 align="center">Menu</h3>
+      <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Price</th>
+              <th scope="col">Inventory</th>              
+              <th scope="col">Quantity</th>
+              <th scope="col"></th> 
+            </tr>
+          </thead>
+          <tbody>
 
 <?php
 //index.php
-
 $cost = 0;
 $number_of_items = 0;
-foreach($items as $item) 
-{
+foreach($items as $item){
     $cost += $item->Price;
     $number_of_items++;
     //loop through the data
-
-    echo "<tr>
-          <td>$item->Name</td>
-          <td>$item->Description</td>
-          <td>$item->Price</td>
-          </tr>";
-    }
 ?>
+    	  <tr>
+          <form method='post'>
+          <input type='hidden' name='id' value='<?php echo $item->ID; ?>' />
             
-<?php include 'includes/footer.php'; ?>           
+          <input type='hidden' name='name' value='<?php echo $item->Name; ?>' />
+          <td><?php echo $item->Name; ?></td>
+            
+          <input type='hidden' name='description' value='<?php echo $item->Description; ?>' />
+          <td><?php echo $item->Description; ?></td>
+          
+		  <input type='hidden' name='price' value='<?php echo $item->Price; ?>' />
+          <td><?php echo $item->Price; ?></td>
+            
+          <td><?php echo $item->Inventory; ?></td>
+          
+          <td>
+          	<input type='text' name='quantity' value='1' class='form-control' />
+          </td>
+          
+          
+          <td>
+         	<input type='submit' name='addToCart' style='margin-top:5px;' class='btn btn-success' value='Add to Cart' />
+          </td>
+          </form>
+          </tr>
+<?php
+}
+?>
+               
+          </tbody>
+      </table>  
+      
+
+			<h3>Order Details</h3>
+			<div class="table-responsive">
+			<?php echo $showMessage; ?>
+			<div align="right">
+				<a href="index.php?action=clear"><button type="button" class="btn btn-warning">Clear Cart</button></a>
+			</div>
+			<table class="table table-bordered">
+				<tr>
+					<th width="10%">Name</th>
+                  	<th width="30%">Description</th>
+                  	<th width="10%">Price</th>
+					<th width="10%">Quantity</th>
+					<th width="15%">Total</th>
+					<th width="5%">Action</th>
+				</tr>
+			<?php
+			if(isset($_COOKIE["shoppingCart"])){
+				//test $_COOKIE
+              	//echo $results = print_r($_COOKIE, true);
+              	$total = 0;
+				$cookieData = stripslashes($_COOKIE['shoppingCart']);
+              	//test $cookieData
+              	//echo $results = print_r($cookieData, true);
+				$cartData = json_decode($cookieData, true);
+				foreach($cartData as $keys => $values){
+			?>
+				<tr>
+					<td><?php echo $values['itemName']; ?></td>
+                  	<td><?php echo $values['itemDescription']; ?></td>
+                  	<td>$ <?php echo $values['itemPrice']; ?></td>
+					<td><?php echo $values['itemQuantity']; ?></td>
+					
+					<td>$ <?php echo number_format($values['itemQuantity'] * $values['itemPrice'], 2);?></td>
+					<td><a href="index.php?action=delete&id=<?php echo $values['itemId']; ?>"><button type="button" class="btn btn-danger">Remove</button></a></td>
+				</tr>
+			<?php	
+					$total = $total + ($values['itemQuantity'] * $values['itemPrice']);
+				}
+			?>
+				<tr>
+					<td colspan="4" align="right">Total</td>
+					<td align="right">$ <?php echo number_format($total, 2); ?></td>
+					<td></td>
+				</tr>
+			<?php
+			}else{
+				echo '<tr><td colspan="6" align="center">Nothing in the cart</td></tr>';
+			}
+			?>
+			</table>
+			</div>
+		</div>
+    </div>
+<?php include 'includes/footer.php'; ?>
