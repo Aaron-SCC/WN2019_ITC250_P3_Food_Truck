@@ -82,6 +82,11 @@ foreach($items as $item){
 				//test $_COOKIE
               	//echo $results = print_r($_COOKIE, true);
               	$total = 0;
+                
+                $tax_total = 0;
+                $total_bill_due = 0;
+                
+                
 				$cookieData = stripslashes($_COOKIE['shoppingCart']);
               	//test $cookieData
               	//echo $results = print_r($cookieData, true);
@@ -99,13 +104,36 @@ foreach($items as $item){
 				</tr>
 			<?php	
 					$total = $total + ($values['itemQuantity'] * $values['itemPrice']);
+                    
+                    $tax_rate = 0.10 ; // Seattle Sales Tax Rate
+                    $tax_total = $tax_rate * $total ; 
+                    
+                    $total_bill_due = $tax_total + $total ;
 				}
 			?>
-				<tr>
-					<td colspan="4" align="right">Total</td>
+                
+                
+<!-- AARON HACK TIME BELOW -->
+                <tr>
+					<td colspan="4" align="right">Sub-Total</td>
 					<td align="right">$ <?php echo number_format($total, 2); ?></td>
 					<td></td>
 				</tr>
+                
+                <tr>
+					<td colspan="4" align="right">Tax</td>
+					<td align="right">$ <?php echo number_format($tax_total, 2); ?></td>
+					<td></td>
+				</tr>
+<!-- AARON HACK TIME ABOVE -->                
+
+                <tr>
+					<td colspan="4" align="right">Total Bill Due</td>
+					<td align="right">$ <?php echo number_format($total_bill_due, 2); ?></td>
+					<td></td>
+				</tr>
+
+
 			<?php
 			}else{
 				echo '<tr><td colspan="6" align="center">Nothing in the cart</td></tr>';
