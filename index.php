@@ -24,8 +24,7 @@
 //index.php
 $cost = 0;
 $number_of_items = 0;
-foreach($items as $item) 
-{
+foreach($items as $item){
     $cost += $item->Price;
     $number_of_items++;
     //loop through the data
@@ -79,8 +78,7 @@ foreach($items as $item)
 					<th width="5%">Action</th>
 				</tr>
 			<?php
-			if(isset($_COOKIE["shoppingCart"]))
-			{
+			if(isset($_COOKIE["shoppingCart"])){
 				//test $_COOKIE
               	//echo $results = print_r($_COOKIE, true);
               	$total = 0;
@@ -88,8 +86,7 @@ foreach($items as $item)
               	//test $cookieData
               	//echo $results = print_r($cookieData, true);
 				$cartData = json_decode($cookieData, true);
-				foreach($cartData as $keys => $values)
-				{
+				foreach($cartData as $keys => $values){
 			?>
 				<tr>
 					<td><?php echo $values['itemName']; ?></td>
@@ -110,9 +107,7 @@ foreach($items as $item)
 					<td></td>
 				</tr>
 			<?php
-			}
-			else
-			{
+			}else{
 				echo '<tr><td colspan="6" align="center">Nothing in the cart</td></tr>';
 			}
 			?>

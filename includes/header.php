@@ -1,4 +1,4 @@
-//header.php
+<!--header.php-->
 <!DOCTYPE html>
 <html>
   <head>

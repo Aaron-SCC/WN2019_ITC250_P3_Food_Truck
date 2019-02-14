@@ -1,6 +1,5 @@
 <?php
 //index.php
-
 $myItem = new Item(1, 'Taco', 'Our tacos are awesome', 4.95, 10);
 /*$myItem->addExtra('sour cream');
 $myItem->addExtra('cheese');
@@ -23,7 +22,8 @@ $myItem->addExtra('whipped cream');
 $myItem->addExtra('cherry');*/
 $items[] = $myItem;
 
-class Item{
+class Item
+{
     //properties
     public $ID = 0;
     public $Name = '';
@@ -33,7 +33,8 @@ class Item{
     public $Extras = array(); //presents 1 to many relationships
     
     //constructor
-    public function __construct($ID, $Name, $Description, $Price, $Inventory){
+    public function __construct($ID, $Name, $Description, $Price, $Inventory)
+    {
         //$this->ID points to the variable $ID
         $this->ID = $ID;
         $this->Name = $Name;
@@ -43,10 +44,8 @@ class Item{
     }//end constructor
     
     //methods
-    public function addExtra($extra){
-        
-        $this->Extras[] = $extra;
-        
+    public function addExtra($extra)
+    {    
+        $this->Extras[] = $extra;   
     }//end function addExtra();
 }//end Item class
-?>

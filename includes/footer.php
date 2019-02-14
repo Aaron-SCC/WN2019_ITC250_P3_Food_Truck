@@ -1,2 +1,3 @@
-  </body>
+<!--footer.php-->
+    </body>
 </html>
