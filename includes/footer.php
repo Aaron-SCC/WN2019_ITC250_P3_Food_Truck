@@ -53,11 +53,7 @@
 			}
 			else
 			{
-				echo '
-				<tr>
-					<td colspan="6" align="center">Nothing in the cart</td>
-				</tr>
-				';
+				echo '<tr><td colspan="6" align="center">Nothing in the cart</td></tr>';
 			}
 			?>
 			</table>
