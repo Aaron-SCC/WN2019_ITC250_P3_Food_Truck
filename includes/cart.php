@@ -14,11 +14,39 @@
  */
 
 $showMessage = '';
-
-if(isset($_POST['addToCart'])){
-	// Disallow incorrect data and provide feedback
+if(isset($_POST['addToCart']))
+{
+  	//For infomation of order create extra id and assign to $_POST
+  	$itemArray = array(
+      	'itemId'				=>	$_POST['id'],
+        'itemExtraNamePrice'	=>	$_POST['extraNamePrice']
+    );
+	$cartData[] = $itemArray;
+  	// test
+  	//echo print_r($itemArray, true);
+  
+	foreach($cartData as $keys => $values){	
+    	$extraIdToitem = '';
+      	$extraId = '';
+        foreach($values['itemExtraNamePrice'] as $result) 
+        {
+        	// test
+            //echo '<br>'.print_r($result, true);
+                  
+           	// Split a string by a string
+          	$resultEx = explode(",", $result);
+            $extraIdToItem .= $resultEx[0];
+        }
+        $extraId = $values['itemId'] . $extraIdToItem;
+       	$_POST['id'] = $extraId;
+    }
+    
+  	// test
+  	//echo '<br>Extra ID: '. $extraId;
+  	
+  	// Disallow incorrect data and provide feedback
   	if(!is_numeric($_POST['quantity'])||strpos($_POST['quantity'],'.')!==false){
-      header("location:index.php?integer=1");
+      	header("location:index.php?integer=1");
     }else{
 		if(isset($_COOKIE['shoppingCart'])){
 			$cookieData = stripslashes($_COOKIE['shoppingCart']);
@@ -37,13 +65,24 @@ if(isset($_POST['addToCart'])){
 					$cartData[$keys]['itemQuantity'] = $cartData[$keys]['itemQuantity'] + $_POST['quantity'];
 				}
 			}
-		}else{
+		}elseif(is_null($_POST['extraNamePrice'])){
+          	$itemArray = array(
+				'itemId'				=>	$_POST['id'],
+				'itemName'				=>	$_POST['name'],
+          		'itemDescription'		=>	$_POST['description'],
+				'itemPrice'				=>	$_POST['price'],
+				'itemQuantity'			=>	$_POST['quantity'],
+              	'itemExtraNamePrice'	=>	0
+			);
+			$cartData[] = $itemArray;
+        }else{
 			$itemArray = array(
 				'itemId'				=>	$_POST['id'],
 				'itemName'				=>	$_POST['name'],
           		'itemDescription'		=>	$_POST['description'],
 				'itemPrice'				=>	$_POST['price'],
-				'itemQuantity'			=>	$_POST['quantity']
+				'itemQuantity'			=>	$_POST['quantity'],
+              	'itemExtraNamePrice'	=>	$_POST['extraNamePrice']
 			);
 			$cartData[] = $itemArray;
 		}
@@ -54,6 +93,7 @@ if(isset($_POST['addToCart'])){
 		setcookie('shoppingCart', $itemData, time() + (3600 * 24 * 30));
 		header("location:index.php?added=1");
 	}
+  	
 }
 
 if(isset($_GET['action'])){

@@ -54,7 +54,7 @@ foreach($items as $item){
           <td><?php echo $item->Description; ?></td>
           
 		  <input type='hidden' name='price' value='<?php echo $item->Price; ?>' />
-          <td><?php echo $item->Price; ?></td>
+          <td>$ <?php echo $item->Price; ?></td>
             
           <td><?php echo $item->Inventory; ?></td>
           
@@ -62,8 +62,44 @@ foreach($items as $item){
           	<input type='text' name='quantity' value='1' class='form-control' />
           </td>
           
+            <tr>
+            
+  			<thead>
+            <tr>
+              <th scope="col">Extra</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>              
+              <th scope="col"></th>
+              <th scope="col"></th> 
+            </tr>
+          	</thead>
+             <?php
+  
+  			$extraNumber = 0;
+  			foreach($item->Extras as $extra)
+            {
+              	?>
+              	
+                <td>
+            	<div class="form-check form-check-inline">
+                  	<!--<input type='hidden' name='extraName[]' value='' />-->
+            		<input class='form-check-input' type='checkbox' name='extraNamePrice[]' value='<?php echo $item->ExtrasId[$extraNumber];?>,<?php echo $extra;?>,<?php echo $item->ExtrasMo[$extraNumber];?>'>
+  					<label class="form-check-label" for="inlineCheckbox1"><?php echo $extra;?></label> &nbsp;&nbsp;&nbsp;$<?php echo $item->ExtrasMo[$extraNumber];?>
+				</div>
+        
+               <?php
+              $extraNumber ++;
+             }
+			?>
+              
+              <td></td>
+            </tr>
+       
+        
+              
           
-          <td>
+          <td colspan="6" align="right">
          	<input type='submit' name='addToCart' style='margin-top:5px;' class='btn btn-success' value='Add to Cart' />
           </td>
           </form>
@@ -85,7 +121,7 @@ foreach($items as $item){
 			<table class="table table-bordered">
 				<tr>
 					<th width="10%">Name</th>
-                  	<th width="30%">Description</th>
+                  	<th width="30%">Extra Description</th>
                   	<th width="10%">Price</th>
 					<th width="10%">Quantity</th>
 					<th width="15%">Total</th>
@@ -93,7 +129,7 @@ foreach($items as $item){
 				</tr>
 			<?php
 			if(isset($_COOKIE["shoppingCart"])){
-				//test $_COOKIE
+				// test $_COOKIE
               	//echo $results = print_r($_COOKIE, true);
               	$total = 0;
                 
@@ -102,23 +138,62 @@ foreach($items as $item){
                 
                 
 				$cookieData = stripslashes($_COOKIE['shoppingCart']);
-              	//test $cookieData
+              	// test $cookieData
               	//echo $results = print_r($cookieData, true);
 				$cartData = json_decode($cookieData, true);
 				foreach($cartData as $keys => $values){
 			?>
 				<tr>
 					<td><?php echo $values['itemName']; ?></td>
-                  	<td><?php echo $values['itemDescription']; ?></td>
+                  	<td>
+                      <?php
+                  	if($values['itemExtraNamePrice'] == 0){
+                      echo 'No Extra';
+                    }else
+                    {
+                      $number = 0;
+                      $resultExTotal = 0;
+                      $extraIdToItem = '';
+                      foreach($values['itemExtraNamePrice'] as $result) 
+                      {
+                        $number ++;
+                        $resultEx = explode(",", $result);
+                        
+                        echo $resultEx[1]. '&nbsp;$';
+                        echo $resultEx[2];
+                        echo str_repeat('&nbsp;', 8);
+                        if(($number) % 2 == 0){
+                        	echo '<br>';
+                        }
+                        $resultExTotal += $resultEx[2]; 
+                        $extraIdToItem .= $resultEx[0];
+                        
+                      }
+                      if($number % 2 == 1){
+                        echo '<br>';
+                      }
+                      echo 'Extra Total: $'. $resultExTotal;
+                      //test
+                      //echo '<br>Extra ID: '. $values['itemId'] . $extraIdToItem;
+                    }
+                      ?>
+                  	</td>
+                  
                   	<td>$ <?php echo $values['itemPrice']; ?></td>
 					<td><?php echo $values['itemQuantity']; ?></td>
-					
-					<td>$ <?php echo number_format($values['itemQuantity'] * $values['itemPrice'], 2);?></td>
+				<?php
+                  	if($values['itemExtraNamePrice'] == 0){
+                      $subTotal =  $values['itemQuantity'] * $values['itemPrice'];
+                    }else{
+                      $subTotal =  $values['itemQuantity'] * ($values['itemPrice'] + $resultExTotal);
+                    }   
+                  ?>
+					<td>$ <?php echo number_format($subTotal, 2);?></td>
 					<td><a href="index.php?action=delete&id=<?php echo $values['itemId']; ?>"><button type="button" class="btn btn-danger">Remove</button></a></td>
 				</tr>
 			<?php	
-					$total = $total + ($values['itemQuantity'] * $values['itemPrice']);
-                    
+					
+                    $total = $total + $subTotal;
                     $tax_rate = 0.10 ; // Seattle Sales Tax Rate
                     $tax_total = $tax_rate * $total ; 
                     
