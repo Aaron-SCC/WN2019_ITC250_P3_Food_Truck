@@ -26,7 +26,7 @@ if(isset($_POST['addToCart']))
   	//echo print_r($itemArray, true);
   
 	foreach($cartData as $keys => $values){	
-    	$extraIdToitem = '';
+    	$extraIdToItem = '';
       	$extraId = '';
         foreach($values['itemExtraNamePrice'] as $result) 
         {
