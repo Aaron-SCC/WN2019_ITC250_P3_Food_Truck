@@ -12,19 +12,20 @@
  * @link http://derekheducation.dreamhosters.com/p3/index.php
  * @license http://opensource.org/licenses/osl-3.0.php Open Software License ("OSL") v. 3.0
  */
-
+//ob_start();
 $showMessage = '';
 if(isset($_POST['addToCart']))
 {
   	//For infomation of order create extra id and assign to $_POST
-  	$itemArray = array(
+  	if(isset($_POST['extraNamePrice'])){
+      $itemArray = array(
       	'itemId'				=>	$_POST['id'],
         'itemExtraNamePrice'	=>	$_POST['extraNamePrice']
-    );
-	$cartData[] = $itemArray;
+    	);
+      
+      $cartData[] = $itemArray;
   	// test
   	//echo print_r($itemArray, true);
-  
 	foreach($cartData as $keys => $values){	
     	$extraIdToItem = '';
       	$extraId = '';
@@ -40,13 +41,77 @@ if(isset($_POST['addToCart']))
         $extraId = $values['itemId'] . $extraIdToItem;
        	$_POST['id'] = $extraId;
     }
-    
+  
+    }else{
+      $itemArray = array(
+      	'itemId'				=>	$_POST['id'],
+        'itemExtraNamePrice'	=>	null
+    	);
+      $cartData[] = $itemArray;
+    }
+  	
+	
+
   	// test
   	//echo '<br>Extra ID: '. $extraId;
   	
   	// Disallow incorrect data and provide feedback
   	if(!is_numeric($_POST['quantity'])||strpos($_POST['quantity'],'.')!==false){
       	header("location:index.php?integer=1");
+    }else{
+		if(isset($_COOKIE['shoppingCart'])){
+			$cookieData = stripslashes($_COOKIE['shoppingCart']);
+
+			$cartData = json_decode($cookieData, true);
+		}else{
+			$cartData = array();
+		}
+
+		$listItemId = array_column($cartData, 'itemId');
+
+		// in_array: Checks if a value exists in an array
+		if(in_array($_POST['id'], $listItemId)){
+			foreach($cartData as $keys => $values){
+				if($cartData[$keys]['itemId'] == $_POST['id']){
+					$cartData[$keys]['itemQuantity'] = $cartData[$keys]['itemQuantity'] + $_POST['quantity'];
+				}
+			}
+		}elseif(!isset($_POST['extraNamePrice'])){
+          	$itemArray = array(
+				'itemId'				=>	$_POST['id'],
+				'itemName'				=>	$_POST['name'],
+          		'itemDescription'		=>	$_POST['description'],
+				'itemPrice'				=>	$_POST['price'],
+				'itemQuantity'			=>	$_POST['quantity'],
+              	'itemExtraNamePrice'	=>	0
+			);
+			$cartData[] = $itemArray;
+        }else{
+			$itemArray = array(
+				'itemId'				=>	$_POST['id'],
+				'itemName'				=>	$_POST['name'],
+          		'itemDescription'		=>	$_POST['description'],
+				'itemPrice'				=>	$_POST['price'],
+				'itemQuantity'			=>	$_POST['quantity'],
+              	'itemExtraNamePrice'	=>	$_POST['extraNamePrice']
+			);
+			$cartData[] = $itemArray;
+		}
+
+		$itemData = json_encode($cartData);
+
+		// setting expiration time of the cookie to 30 days
+		setcookie('shoppingCart', $itemData, time() + (3600 * 24 * 30));
+		header("location:index.php?added=1");
+	}
+  	
+}
+/*
+if(isset($_POST['addToCart'])){
+  
+	// Disallow incorrect data and provide feedback
+  	if(!is_numeric($_POST['quantity'])||strpos($_POST['quantity'],'.')!==false){
+      header("location:index.php?integer=1");
     }else{
 		if(isset($_COOKIE['shoppingCart'])){
 			$cookieData = stripslashes($_COOKIE['shoppingCart']);
@@ -93,9 +158,8 @@ if(isset($_POST['addToCart']))
 		setcookie('shoppingCart', $itemData, time() + (3600 * 24 * 30));
 		header("location:index.php?added=1");
 	}
-  	
 }
-
+*/
 if(isset($_GET['action'])){
 	if($_GET['action'] == 'delete'){
 		$cookieData = stripslashes($_COOKIE['shoppingCart']);
