@@ -2,7 +2,10 @@ WN2019_ITC250_P3_Food_Truck
 
 WN2019_ITC250_P3_Food_Truck
 
-
+<br><br>
+PROJECT WORK PAGE GOOGLE DOC:
+https://docs.google.com/document/d/1u0_gpMPEseMrtBDoOrEjT36vFZ_TsCfYTLMYRR3-hvY/edit 
+<br><br>
 
 
 ITC250 GP3 Food Truck
@@ -44,6 +47,10 @@ Slack
 Documentation 
 Visual design 
 Project Management
+<br><br>
+
+
+
 Aaron Lewis
 aaron.lewis@seattlcentral.edu
 
@@ -53,21 +60,17 @@ aaron.lewis@seattlcentral.edu
 Repo mgmt
 Testing 
 Debugging
-
+<br><br>
 
 
 
 Derrick
 jtrvsconan@gmail.com
 Github: zjwda2016
-
-
-
-
 Data/object handling
+<br><br>
 
 
-
-
+<br><br>
 Slack: https://itc250-p3-foodtruck.slack.com
 
