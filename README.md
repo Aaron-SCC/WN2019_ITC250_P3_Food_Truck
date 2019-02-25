@@ -26,14 +26,13 @@ Name
 Contact
 Availability
 Roles
+<br><br>
 Derek
 mooserkay@gmail.com
 Github: elb-dev
-
-
-
-
 Tech Lead
+<br><br>
+
 Liyun Cecil
 liyuncecil@gmail.com
 Github: liyuncc
